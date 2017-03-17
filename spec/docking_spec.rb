@@ -24,10 +24,28 @@ end
 end
 
 
-  it 'raises Exception when user tries to dock a bike to a station that is full (capacity = 20)' do
-    20.times {subject.dock_bike Bike.new }
+  it 'raises Exception when user tries to dock a bike to a station that is full' do
+    subject.capacity.times {subject.dock_bike Bike.new } #Fill up the bike rack with number of bikes.
     expect { subject.dock_bike(Bike.new) }.to raise_error("Docking station is full")
   end
+
+  describe "#Initiazation" do
+    it 'creates stations with a default capacity of 20' do
+    expect(subject.capacity).to eq DockingStation::DEFAULT_CAPACITY
+  end
+
+    it "allows engineers to reassign capacity" do
+      n = rand(0..100)
+      subject.capacity = n
+      expect(subject.capacity).to eq n
+    end
+
+    it "allows engineers to assign capacity when creating the station" do
+    docking_station = DockingStation.new(50) #Creating 50 new spaces.
+    50.times { docking_station.dock_bike(Bike.new) } #Adding 50 bikes.
+    expect{ docking_station.dock_bike(Bike.new) }.to raise_error "Docking station is full" #Raise error when trying to add another one.
+end
+end
 end
 
 #subject is always BRAND NEW.
