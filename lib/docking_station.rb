@@ -12,7 +12,10 @@ end
   def release_bike
     if empty?
     raise "No bikes available."  # Guard condition
-    else
+  elsif
+    bike_rack.pop.status == false
+    raise "This bike is broken."
+  else
     bike_rack.pop
   end
 

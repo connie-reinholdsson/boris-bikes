@@ -46,6 +46,13 @@ end
     expect{ docking_station.dock_bike(Bike.new) }.to raise_error "Docking station is full" #Raise error when trying to add another one.
 end
 end
+
+it "subject does not allows broken bikes to be released" do
+bike1 = Bike.new
+bike1.report_broken
+subject.dock_bike(bike1)
+expect {subject.release_bike}.to raise_error "This bike is broken."
+end 
 end
 
 #subject is always BRAND NEW.
